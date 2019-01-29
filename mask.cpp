@@ -7,6 +7,11 @@
 
 using namespace std;
 
+/*
+    This program takes a text file and a key-word as an input 
+    and returns the same text with all  entry's of the key-word deleted
+*/
+
 char cur = ' ';
 vector <char> letter;
 vector <set <int>> gap;
@@ -89,7 +94,6 @@ void parse_key(string key){
                 }
             }
         }
-
     }
 }
 
