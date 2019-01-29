@@ -6,12 +6,13 @@ const int Nmax = 10010;
 
 using namespace std;
 
-//знак числа, з яким працює користувач
 bool sign = true;
 
 /*
-Стурктура "Довге число"
-Зберігає довжину числа та масив цифр, з яких воно складається
+
+This program is multiplying very long integers
+If input is anything but an integer, program is terminated
+
 */
 struct Tlong{
     int length;
@@ -28,7 +29,6 @@ struct Tlong{
     }
 };
 
-// Приведення рядка до числа
 int to_int(string s){
     int a = 0;
     for(int i = 0, l = s.length(); i < l; i++){
@@ -38,7 +38,6 @@ int to_int(string s){
     return a;
 }
 
-// Виведення довгого числа
 print_long(Tlong N){
     if(!sign) cout << "-";
     for(int i = N.length-1; i >= 0; i--){
@@ -47,10 +46,6 @@ print_long(Tlong N){
     cout << endl;
 }
 
-/*
-Додавання довгих чисел, модифікована для  використання у множенні
-До числа N додається число cur, помножене на 10^p
-*/
 void spec_add(Tlong &N, Tlong cur, int p){
     int rest = 0;
     for(int i = p, l = p+cur.length; i < l; i++){
@@ -65,7 +60,6 @@ void spec_add(Tlong &N, Tlong cur, int p){
     }
 }
 
-// Множення довгого числа на коротке
 Tlong mult_short(Tlong N, long long a){
     if(a == 0){
         sign = true;
@@ -87,7 +81,6 @@ Tlong mult_short(Tlong N, long long a){
     return N;
 }
 
-// Множення довгого числа на довге число
 Tlong mult_long(Tlong N, Tlong A){
     Tlong res = *new Tlong("0");
     for(int p = 0, l = A.length; p < l; p++){
@@ -108,8 +101,7 @@ int main(){
     do{
         cout << "Current value is: ";
         print_long(N);
-
-        //Перевірка, чи не є число нулем
+        
         if(N.length == 1 && N.digit[0] == 0){
             zero:
             cout << "Current value is: 0\n";
@@ -123,7 +115,7 @@ int main(){
             for(int i = 0, l = s.length(); i < l; i++){
                 if(s[i] < '0' || s[i] > '9')
                     if(i == 0 && s[i] == '-' && s.length() != 1) pls = false;
-                    else brk = true; // Якщо введені не цифри
+                    else brk = true; 
                 }
             if(brk)
                 break;
@@ -141,25 +133,24 @@ int main(){
             print_long(N);
         }
 
-        //Робота з ненульовими числами
         cout << "Your input: ";
         cin >> s;
         cout << endl;
         for(int i = 0, l = s.length(); i < l; i++){
             if(s[i] < '0' || s[i] > '9')
                 if(i == 0 && s[i] == '-' && s.length() != 1) pls = false;
-                else brk = true; //Якщо присутні символи, які не є цифрами
+                else brk = true;
             }
         if(brk)
             break;
         if(!pls){
-            s.erase(0,1); // Якщо число з мінусом, видаляємо його,
-            sign = !sign; // Міняємо знак результату
+            s.erase(0,1); 
+            sign = !sign; 
             pls = true;
 
         }
         if(s.length() == 1 && s[0] == '0')
-            goto zero; // Вийняток для множення на 0
+            goto zero; 
 
         N = mult_long(N,*(new Tlong(s)));
 
